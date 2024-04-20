@@ -1,5 +1,12 @@
 require("dotenv").config();
 
+const cors = require('cors');
+
+// Allow all origins
+app.use(cors({
+    origin: '*'
+  }));
+
 const express = require("express");
 const morgan = require("morgan")
 const createError = require('http-errors');
@@ -7,6 +14,7 @@ require('./helpers/init_mongodb');
 
 const AuthRoute = require('./Routes/auth.route');
 const { verifyAccessToken } = require("./helpers/jwt_helper");
+const User = require("./Models/User.model");
 
 const app = express();
 
@@ -17,7 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 app.get("/",verifyAccessToken, async (req, res, next) => {
-    console.log(req.headers['authorization']);
+    // console.log(req.headers['authorization']);
+    const {id} = req;
+
+    const user = await User.findById(id);
+
+    console.log({...user, password: '' });
+
+    // console.log(id);
     res.send("Hello World1!")
 });
 

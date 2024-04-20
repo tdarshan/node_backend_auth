@@ -2,10 +2,6 @@ require("dotenv").config();
 
 const cors = require('cors');
 
-// Allow all origins
-app.use(cors({
-    origin: '*'
-  }));
 
 const express = require("express");
 const morgan = require("morgan")
@@ -17,6 +13,12 @@ const { verifyAccessToken } = require("./helpers/jwt_helper");
 const User = require("./Models/User.model");
 
 const app = express();
+
+
+// Allow all origins
+app.use(cors({
+    origin: '*'
+  }));
 
 app.use(morgan('dev'));
 app.use(express.json());

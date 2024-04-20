@@ -16,9 +16,7 @@ const app = express();
 
 
 // Allow all origins
-app.use(cors({
-    origin: '*'
-  }));
+app.use(cors());
 
 app.use(morgan('dev'));
 app.use(express.json());

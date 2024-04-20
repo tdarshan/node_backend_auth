@@ -17,6 +17,8 @@ router.post("/register", async (req, res, next) => {
 
                 const result = await authSchema.validateAsync(req.body);
 
+                console.log(result);
+
                 const isExists = await User.findOne({ email: result.email });
 
                 if (isExists) {
@@ -29,7 +31,7 @@ router.post("/register", async (req, res, next) => {
                 const accessToken = await signAccessToken(savedUser.id);
                 const refreshToken = await signRefreshToken(savedUser.id);
 
-                res.send({ accessToken, refreshToken });
+                res.send({ accessToken, refreshToken, user });
 
         } catch (err) {
 
@@ -61,7 +63,7 @@ router.post("/login", async (req, res, next) => {
                 const accessToken = await signAccessToken(user.id);
                 const refreshToken = await signRefreshToken(user.id);
 
-                res.send({accessToken, refreshToken});
+                res.send({accessToken, refreshToken, user});
         } catch (err) {
 
                 if(err.isJoi){
